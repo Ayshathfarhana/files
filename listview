@@ -1,0 +1,55 @@
+package com.example.qburst.listview;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+
+    private List<List_of_det> listOfDet = new ArrayList<List_of_det>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        populateList();
+        populateListview();
+    }
+
+    protected void populateList() {
+        listOfDet.add(new List_of_det("Aysha", R.drawable.user1, "kasaragod"));
+    }
+
+    private void populateListview() {
+        ArrayAdapter<List_of_det> adapter = new MyListAdapter();
+        ListView listView = (ListView) findViewById(R.id.dtlslistView);
+        listView.setAdapter(adapter);
+    }
+  private class MyListAdapter extends ArrayAdapter<List_of_det> {
+      public MyListAdapter()
+      {
+          super(MainActivity.this, R.layout.activity_main, listOfDet);
+      }
+  @Override
+
+    public View getView(int position, View conterView, ViewGroup parent) {
+      View itemview = conterView;
+      if (itemview == null) {
+          itemview = getLayoutInflater().inflate(R.layout.activity_main, parent);
+      }
+      List_of_det list_of_det = listOfDet.get(position);
+      ImageView imageView = (ImageView) itemview.findViewById(R.id.item_icon);
+      imageView.setImageResource(list_of_det.getIcon_id());
+      return itemview;
+
+  }
+    }
+}
